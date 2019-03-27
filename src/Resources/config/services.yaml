@@ -5,3 +5,6 @@ services:
 
     Becklyn\IconLoader\:
         resource: '../../*'
+
+    Becklyn\IconLoader\Registry\IconRegistry:
+        $isDebug: '%kernel.debug%'
