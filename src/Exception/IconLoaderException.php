@@ -2,7 +2,6 @@
 
 namespace Becklyn\IconLoader\Exception;
 
-
 class IconLoaderException extends \RuntimeException
 {
     /**

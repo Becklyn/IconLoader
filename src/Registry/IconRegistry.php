@@ -34,8 +34,9 @@ class IconRegistry
 
 
     /**
-     * @param IconLoader $loader
-     * @param bool       $throwOnMissing
+     * @param CacheInterface $cache
+     * @param IconLoader     $loader
+     * @param bool           $isDebug
      */
     public function __construct (CacheInterface $cache, IconLoader $loader, bool $isDebug)
     {
@@ -46,7 +47,7 @@ class IconRegistry
 
 
     /**
-     * Fetches the registry
+     * Fetches the registry.
      *
      * @return array
      */
@@ -64,10 +65,10 @@ class IconRegistry
 
 
     /**
-     * Returns the icons' SVG content
+     * Returns the icons' SVG content.
      *
      * @param string    $name
-     * @param bool|null $ignoreMissing
+     * @param bool|null $throwOnMissing
      */
     public function get (string $name, ?bool $throwOnMissing = null) : ?string
     {

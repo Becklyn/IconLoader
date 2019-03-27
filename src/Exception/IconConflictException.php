@@ -2,7 +2,6 @@
 
 namespace Becklyn\IconLoader\Exception;
 
-
 class IconConflictException extends IconLoaderException
 {
     /**

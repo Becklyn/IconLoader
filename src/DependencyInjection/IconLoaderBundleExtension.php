@@ -24,7 +24,7 @@ class IconLoaderBundleExtension extends Extension
 
         // map config to services
         $config = $this->processConfiguration(new IconLoaderBundleConfiguration(), $configs);
-        $directoriesGlob = $container->getParameter("kernel.project_dir") . "/" . ltrim($config["search_glob"], "/");
+        $directoriesGlob = $container->getParameter("kernel.project_dir") . "/" . \ltrim($config["search_glob"], "/");
         $container
             ->getDefinition(IconLoader::class)
             ->setArgument('$directoriesGlob', $directoriesGlob);

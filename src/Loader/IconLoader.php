@@ -2,7 +2,6 @@
 
 namespace Becklyn\IconLoader\Loader;
 
-
 use Becklyn\IconLoader\Exception\IconConflictException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -16,7 +15,6 @@ class IconLoader
 
 
     /**
-     *
      * @param string $directoriesGlob
      */
     public function __construct (string $directoriesGlob)
@@ -81,7 +79,7 @@ class IconLoader
 
 
     /**
-     * Fetches all directories to search in
+     * Fetches all directories to search in.
      *
      * @return array
      */
