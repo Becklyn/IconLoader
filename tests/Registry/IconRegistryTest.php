@@ -43,7 +43,7 @@ class IconRegistryTest extends TestCase
 
         self::assertSame("1", $registry->get("a"));
         self::assertSame("2", $registry->get("b"));
-        self::assertNull($registry->get("missing"));
+        self::assertSame("", $registry->get("missing"));
     }
 
 
