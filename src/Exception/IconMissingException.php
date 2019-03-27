@@ -10,7 +10,7 @@ class IconMissingException extends IconLoaderException
     public function __construct (string $iconName, ?\Throwable $previous = null)
     {
         parent::__construct(
-            \sprintf("Could not find icon: '%s'", $iconName),
+            \sprintf("Could not find icon: '%s'.", $iconName),
             $previous
         );
     }

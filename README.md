@@ -35,6 +35,6 @@ In Twig:
 Notable Behavior
 ----------------
 
-*   Missing icons produce an exception if explicitly required (`true` as second argument in the function calls under "Usage") or if the app is in debug mode.
+*   Missing icons produce an exception if the app is in debug mode and will be an empty string in prod.
 *   If multiple icons with the same name are found, an error is thrown only if these icons have different content.
 *   The registry is cached in non-debug mode, so there shouldn't be any performance overhead.

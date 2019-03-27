@@ -76,15 +76,4 @@ class IconLoader
             return [];
         }
     }
-
-
-    /**
-     * Fetches all directories to search in.
-     *
-     * @return array
-     */
-    private function getDirectories () : array
-    {
-
-    }
 }

@@ -67,23 +67,17 @@ class IconRegistry
     /**
      * Returns the icons' SVG content.
      *
-     * @param string    $name
-     * @param bool|null $throwOnMissing
+     * @param string $name
      */
-    public function get (string $name, ?bool $throwOnMissing = null) : ?string
+    public function get (string $name) : string
     {
-        if (null === $throwOnMissing)
-        {
-            $throwOnMissing = $this->isDebug;
-        }
-
         $registry = $this->fetchRegistry();
 
-        if (!isset($registry[$name]) && $throwOnMissing)
+        if (!isset($registry[$name]) && !$this->isDebug)
         {
             throw new IconMissingException($name);
         }
 
-        return $registry[$name] ?? null;
+        return $registry[$name] ?? "";
     }
 }
