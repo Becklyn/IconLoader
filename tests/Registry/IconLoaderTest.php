@@ -8,6 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 class IconLoaderTest extends TestCase
 {
+    /**
+     *
+     */
     public function testValid ()
     {
         $loader = new IconLoader(__DIR__ . "/../_fixtures/valid/*/icon");
@@ -20,12 +23,25 @@ class IconLoaderTest extends TestCase
     }
 
 
+    /**
+     *
+     */
     public function testConflict ()
     {
         $this->expectException(IconConflictException::class);
         $this->expectExceptionMessage("Conflict for icon 'conflict'.");
 
         $loader = new IconLoader(__DIR__ . "/../_fixtures/different_files/*/icon");
-        $map = $loader->load();
+        $loader->load();
+    }
+
+
+    /**
+     *
+     */
+    public function testMissingDir ()
+    {
+        $loader = new IconLoader(__DIR__ . "/../_fixtures/different_files/*/missing");
+        self::assertSame([], $loader->load());
     }
 }
