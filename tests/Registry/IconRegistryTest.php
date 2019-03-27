@@ -37,20 +37,20 @@ class IconRegistryTest extends TestCase
     /**
      *
      */
-    public function testFetch ()
+    public function testFetch () : void
     {
         $registry = $this->buildRegistry(["a" => "1", "b" => "2"], true);
 
-        self::assertSame("1", $registry->get("a"));
-        self::assertSame("2", $registry->get("b"));
-        self::assertSame("", $registry->get("missing"));
+        static::assertSame("1", $registry->get("a"));
+        static::assertSame("2", $registry->get("b"));
+        static::assertSame("", $registry->get("missing"));
     }
 
 
     /**
      *
      */
-    public function testExceptionOnMissing ()
+    public function testExceptionOnMissing () : void
     {
         $this->expectException(IconMissingException::class);
         $this->expectExceptionMessage("Could not find icon: 'missing'.");
@@ -63,12 +63,12 @@ class IconRegistryTest extends TestCase
     /**
      *
      */
-    public function testCacheFetchOnProd ()
+    public function testCacheFetchOnProd () : void
     {
         $cache = $this->getMockBuilder(CacheInterface::class)
             ->getMock();
 
-        $cache->expects(self::once())
+        $cache->expects(static::once())
             ->method("get")
             ->willReturn(["a" => "a"]);
 
@@ -77,6 +77,6 @@ class IconRegistryTest extends TestCase
             ->getMock();
 
         $registry = new IconRegistry($cache, $loader, false);
-        self::assertSame("a", $registry->get("a"));
+        static::assertSame("a", $registry->get("a"));
     }
 }

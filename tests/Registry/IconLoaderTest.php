@@ -11,22 +11,22 @@ class IconLoaderTest extends TestCase
     /**
      *
      */
-    public function testValid ()
+    public function testValid () : void
     {
         $loader = new IconLoader(__DIR__ . "/../_fixtures/valid/*/icon");
         $map = $loader->load();
 
-        self::assertCount(3, $map);
-        self::assertSame("add", $map["add"]);
-        self::assertSame("remove", $map["remove"]);
-        self::assertSame("nested", $map["nested"]);
+        static::assertCount(3, $map);
+        static::assertSame("add", $map["add"]);
+        static::assertSame("remove", $map["remove"]);
+        static::assertSame("nested", $map["nested"]);
     }
 
 
     /**
      *
      */
-    public function testConflict ()
+    public function testConflict () : void
     {
         $this->expectException(IconConflictException::class);
         $this->expectExceptionMessage("Conflict for icon 'conflict'.");
@@ -39,9 +39,9 @@ class IconLoaderTest extends TestCase
     /**
      *
      */
-    public function testMissingDir ()
+    public function testMissingDir () : void
     {
         $loader = new IconLoader(__DIR__ . "/../_fixtures/different_files/*/missing");
-        self::assertSame([], $loader->load());
+        static::assertSame([], $loader->load());
     }
 }
