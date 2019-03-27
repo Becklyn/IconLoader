@@ -2,12 +2,19 @@
 
 namespace Becklyn\IconLoader\Registry;
 
-
 use Becklyn\IconLoader\Exception\IconMissingException;
 use Becklyn\IconLoader\Loader\IconLoader;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class IconRegistry
 {
+    const CACHE_KEY = "becklyn.icon_loader.registry";
+
+    /**
+     * @var CacheInterface
+     */
+    private $cache;
+
     /**
      * @var IconLoader
      */
@@ -17,7 +24,7 @@ class IconRegistry
     /**
      * @var bool
      */
-    private $throwOnMissing;
+    private $isDebug;
 
 
     /**
@@ -30,15 +37,29 @@ class IconRegistry
      * @param IconLoader $loader
      * @param bool       $throwOnMissing
      */
-    public function __construct (IconLoader $loader, bool $isDebug)
+    public function __construct (CacheInterface $cache, IconLoader $loader, bool $isDebug)
     {
-        $this->throwOnMissing = $isDebug;
+        $this->cache = $cache;
         $this->loader = $loader;
+        $this->isDebug = $isDebug;
+    }
 
-        if (!$isDebug)
+
+    /**
+     * Fetches the registry
+     *
+     * @return array
+     */
+    private function fetchRegistry () : array
+    {
+        if (null === $this->registry)
         {
-            // load cache here
+            $this->registry = !$this->isDebug
+                ? $this->cache->get(self::CACHE_KEY, [$this->loader, "load"])
+                : $this->loader->load();
         }
+
+        return $this->registry;
     }
 
 
@@ -52,19 +73,16 @@ class IconRegistry
     {
         if (null === $throwOnMissing)
         {
-            $throwOnMissing = $this->throwOnMissing;
+            $throwOnMissing = $this->isDebug;
         }
 
-        if (null === $this->registry)
-        {
-            $this->registry = $this->loader->load();
-        }
+        $registry = $this->fetchRegistry();
 
-        if (!isset($this->registry[$name]) && $throwOnMissing)
+        if (!isset($registry[$name]) && $throwOnMissing)
         {
             throw new IconMissingException($name);
         }
 
-        return $this->registry[$name] ?? null;
+        return $registry[$name] ?? null;
     }
 }
