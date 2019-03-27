@@ -23,6 +23,7 @@
         "symfony/config": "^4.2",
         "symfony/dependency-injection": "^4.2",
         "symfony/http-kernel": "^4.2"
+        "symfony/finder": "^4.2",
     },
     "require-dev": {
         "becklyn/php-cs": "^1.0.9",
