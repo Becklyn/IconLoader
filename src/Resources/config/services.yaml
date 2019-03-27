@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+
+    Becklyn\IconLoader\:
+        resource: '../../*'
+
+    Becklyn\IconLoader\Registry\IconRegistry:
+        $isDebug: '%kernel.debug%'
