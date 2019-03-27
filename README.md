@@ -1,5 +1,40 @@
-MimeoBundle
+Icon Loader
 ===========
-Mimeo: copy (static) assets from NPM packages into your symfony project.
 
-The name is inspired by the short name of a [mimeograph](https://en.wikipedia.org/wiki/Mimeograph).
+Icon loader, that loads `.svg` icons from different directories and provides a registry to embed them.
+
+Configuration:
+--------------
+
+```yaml
+becklyn_icon_loader:    
+    search_glob: "build/mayd/*/icon"    # this is the default value
+```
+
+The glob defines a path to all directories, that can contain SVG icons. These directories will be searched recursively and
+all found icons will be added to the registry.
+
+Usage
+-----
+
+In PHP:
+
+```php
+$registry = $container->get(IconRegistry::class);
+
+$svgContent = $registry->get("add");    // $svgContent === "<svg xml..."
+```
+
+In Twig:
+
+```twig
+{{ icon("add") }}
+```
+
+
+Notable Behavior
+----------------
+
+*   Missing icons produce an exception if explicitly required (`true` as second argument in the function calls under "Usage") or if the app is in debug mode.
+*   If multiple icons with the same name are found, an error is thrown only if these icons have different content.
+*   The registry is cached in non-debug mode, so there shouldn't be any performance overhead.
