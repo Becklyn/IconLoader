@@ -73,7 +73,7 @@ class IconRegistry
     {
         $registry = $this->fetchRegistry();
 
-        if (!isset($registry[$name]) && !$this->isDebug)
+        if (!isset($registry[$name]) && $this->isDebug)
         {
             throw new IconMissingException($name);
         }

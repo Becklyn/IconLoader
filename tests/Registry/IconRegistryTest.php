@@ -43,20 +43,29 @@ class IconRegistryTest extends TestCase
 
         static::assertSame("1", $registry->get("a"));
         static::assertSame("2", $registry->get("b"));
-        static::assertSame("", $registry->get("missing"));
     }
 
 
     /**
      *
      */
-    public function testExceptionOnMissing () : void
+    public function testExceptionOnMissingInDebug () : void
     {
         $this->expectException(IconMissingException::class);
         $this->expectExceptionMessage("Could not find icon: 'missing'.");
 
-        $registry = $this->buildRegistry([], false);
+        $registry = $this->buildRegistry([], true);
         $registry->get("missing");
+    }
+
+
+    /**
+     *
+     */
+    public function testIgnoreOnMissingInProd () : void
+    {
+        $registry = $this->buildRegistry([], false);
+        static::assertSame("", $registry->get("missing"));
     }
 
 
