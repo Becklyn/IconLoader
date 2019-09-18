@@ -30,7 +30,7 @@ class IconLoaderBundleConfiguration implements ConfigurationInterface
                             ->scalarNode("path")
                                 ->isRequired()
                             ->end()
-                            ->scalarNode("class_name")
+                            ->scalarNode("class_pattern")
                                 ->defaultNull()
                                 ->info("The class name pattern. The icon name will be passed and can be embedded using sprintf syntax '%s'.")
                             ->end()

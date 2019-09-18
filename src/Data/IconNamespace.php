@@ -19,19 +19,19 @@ class IconNamespace
     /**
      * @var string
      */
-    private $className;
+    private $classPattern;
 
 
     /**
      * @param string $key
      * @param string $directory
-     * @param string $className
+     * @param string $classPattern
      */
-    public function __construct (string $key, string $directory, ?string $className)
+    public function __construct (string $key, string $directory, ?string $classPattern = null)
     {
         $this->key = $key;
         $this->directory = $directory;
-        $this->className = $className ?? "icon icon-%s";
+        $this->classPattern = $classPattern ?? "icon icon-%s";
     }
 
 
@@ -56,8 +56,8 @@ class IconNamespace
     /**
      * @return string
      */
-    public function getClassName () : string
+    public function getClassPattern () : string
     {
-        return $this->className;
+        return $this->classPattern;
     }
 }

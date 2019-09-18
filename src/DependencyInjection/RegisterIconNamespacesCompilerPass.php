@@ -40,7 +40,7 @@ class RegisterIconNamespacesCompilerPass implements CompilerPassInterface
             $registry->addMethodCall("registerProjectNamespace", [
                 $namespace,
                 $config["path"],
-                $config["class_name"] ?? null,
+                $config["class_pattern"] ?? null,
             ]);
         }
     }
