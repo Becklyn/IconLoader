@@ -8,6 +8,7 @@ use Becklyn\IconLoader\Exception\IconMissingException;
 use Becklyn\IconLoader\Exception\InvalidIconKeyException;
 use Becklyn\IconLoader\Exception\NamespaceMissingException;
 use Becklyn\IconLoader\Loader\IconLoader;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Contracts\Cache\CacheInterface;
 
 class IconRegistry
@@ -149,7 +150,7 @@ class IconRegistry
      */
     public function get (string $key) : string
     {
-        $parts = \explode("/", $key, 2);
+        $parts = \explode("/", $key);
 
         if (2 !== \count($parts))
         {
