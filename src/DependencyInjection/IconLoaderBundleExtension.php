@@ -24,7 +24,6 @@ class IconLoaderBundleExtension extends Extension
 
         // map config to services
         $config = $this->processConfiguration(new IconLoaderBundleConfiguration(), $configs);
-
         $registry = $container->getDefinition(IconRegistry::class);
 
         foreach ($config["namespaces"] as $namespace => $namespaceConfig)
@@ -32,8 +31,17 @@ class IconLoaderBundleExtension extends Extension
             $registry->addMethodCall("registerProjectNamespace", [
                 $namespace,
                 $namespaceConfig["path"],
-                $namespaceConfig["class_name"],
+                $namespaceConfig["class_pattern"],
             ]);
         }
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getAlias ()
+    {
+        return "icon_loader";
     }
 }

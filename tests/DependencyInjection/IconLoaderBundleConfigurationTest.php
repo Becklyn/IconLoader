@@ -14,11 +14,11 @@ class IconLoaderBundleConfigurationTest extends TestCase
     public function provideProcessValues () : array
     {
         return [
-            [
+            "empty" => [
                 [],
                 ["namespaces" => []],
             ],
-            [
+            "variations" => [
                 ["namespaces" => [
                     "test" => [
                         "path" => "path-test",
@@ -41,6 +41,20 @@ class IconLoaderBundleConfigurationTest extends TestCase
                     "test3" => [
                         "path" => "path-test2",
                         "class_pattern" => null,
+                    ],
+                ]],
+            ],
+            "disable class pattern" => [
+                ["namespaces" => [
+                    "test" => [
+                        "path" => "path-test",
+                        "class_pattern" => "",
+                    ],
+                ]],
+                ["namespaces" => [
+                    "test" => [
+                        "path" => "path-test",
+                        "class_pattern" => "",
                     ],
                 ]],
             ],

@@ -155,9 +155,9 @@ class IconRegistryTest extends TestCase
         $registry->registerNamespace(new IconNamespace("a", "{$this->fixtures}/valid/a"));
         $registry->registerNamespace(new IconNamespace("b", "{$this->fixtures}/valid/b"));
 
-        self::assertSame(\trim(\file_get_contents("{$this->fixtures}/valid/a/add.svg")), $registry->get("a/add"));
-        self::assertSame(\trim(\file_get_contents("{$this->fixtures}/valid/b/add.svg")), $registry->get("b/add"));
-        self::assertSame(\trim(\file_get_contents("{$this->fixtures}/valid/a/sub/nested.svg")), $registry->get("a/nested"));
+        self::assertContains(\trim(\file_get_contents("{$this->fixtures}/valid/a/add.svg")), $registry->get("a/add"));
+        self::assertContains(\trim(\file_get_contents("{$this->fixtures}/valid/b/add.svg")), $registry->get("b/add"));
+        self::assertContains(\trim(\file_get_contents("{$this->fixtures}/valid/a/sub/nested.svg")), $registry->get("a/nested"));
     }
 
 
@@ -190,14 +190,12 @@ class IconRegistryTest extends TestCase
         $loader
             ->expects(self::once())
             ->method("load")
-            ->with("/project/dir/valid/a")
+            ->with("/project/dir/valid/a", "test")
             ->willReturn(["add" => "add"]);
 
         $registry = new IconRegistry(new ArrayAdapter(), $loader, "/project/dir/", true);
 
-        $registry->registerProjectNamespace("test", "/valid/a");
+        $registry->registerProjectNamespace("test", "/valid/a", "test");
         $registry->get("test/add");
     }
-
-
 }

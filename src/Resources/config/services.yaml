@@ -7,5 +7,6 @@ services:
         resource: '../../*'
 
     Becklyn\IconLoader\Registry\IconRegistry:
+        $cache: '@cache.app'
         $isDebug: '%kernel.debug%'
         $projectDir: '%kernel.project_dir%'

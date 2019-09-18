@@ -132,7 +132,10 @@ class IconRegistry
 
         foreach ($this->namespaces as $namespace)
         {
-            $registry[$namespace->getKey()] = $this->loader->load($namespace->getDirectory());
+            $registry[$namespace->getKey()] = $this->loader->load(
+                $namespace->getDirectory(),
+                $namespace->getClassPattern()
+            );
         }
 
         return $registry;
