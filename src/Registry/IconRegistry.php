@@ -26,9 +26,7 @@ class IconRegistry
 
 
     /**
-     * Mapping from namespaces name to loader glob.
-     *
-     * @var array
+     * @var IconNamespace[]
      */
     private $namespaces = [];
 
@@ -117,7 +115,7 @@ class IconRegistry
         if (null === $this->registry)
         {
             $this->registry = !$this->isDebug
-                ? $this->cache->get(self::CACHE_KEY, [$this, "loadAll"])
+                ? $this->cache->get(self::CACHE_KEY, function () { return $this->loadAll(); })
                 : $this->loadAll();
         }
 
@@ -132,9 +130,9 @@ class IconRegistry
     {
         $registry = [];
 
-        foreach ($this->namespaces as $namespace => $glob)
+        foreach ($this->namespaces as $namespace)
         {
-            $registry[$namespace] = $this->loader->load($glob);
+            $registry[$namespace->getKey()] = $this->loader->load($namespace->getDirectory());
         }
 
         return $registry;
@@ -165,10 +163,7 @@ class IconRegistry
         {
             if ($this->isDebug)
             {
-                throw new NamespaceMissingException(\sprintf(
-                    "Unknown icon namespace: '%s'",
-                    $parts[0]
-                ));
+                throw new NamespaceMissingException($parts[0]);
             }
 
             return "";
@@ -180,7 +175,7 @@ class IconRegistry
         {
             if ($this->isDebug)
             {
-                throw new IconMissingException($key);
+                throw new IconMissingException($parts[1], $parts[0]);
             }
 
             return "";

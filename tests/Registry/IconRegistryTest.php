@@ -2,10 +2,13 @@
 
 namespace Tests\Becklyn\IconLoader\Registry;
 
+use Becklyn\IconLoader\Data\IconNamespace;
 use Becklyn\IconLoader\Exception\IconMissingException;
+use Becklyn\IconLoader\Exception\NamespaceMissingException;
 use Becklyn\IconLoader\Loader\IconLoader;
 use Becklyn\IconLoader\Registry\IconRegistry;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Contracts\Cache\CacheInterface;
 
 class IconRegistryTest extends TestCase
@@ -17,20 +20,24 @@ class IconRegistryTest extends TestCase
      */
     private function buildRegistry (array $map, bool $isDebug)
     {
-        $cache = $this->getMockBuilder(CacheInterface::class)
-            ->getMock();
-
-        $cache->method("get")
-            ->willReturn($map);
+        $cache = new ArrayAdapter();
 
         $loader = $this->getMockBuilder(IconLoader::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $loader->method("load")
-            ->willReturn($map);
+            ->willReturnCallback(function ($key) use ($map) { return $map[$key] ?? []; });
 
-        return new IconRegistry($cache, $loader, $isDebug);
+        $registry = new IconRegistry($cache, $loader, $isDebug);
+
+        // register namespaces
+        foreach ($map as $namespace => $config)
+        {
+            $registry->registerNamespace(new IconNamespace($namespace, $namespace));
+        }
+
+        return $registry;
     }
 
 
@@ -39,33 +46,57 @@ class IconRegistryTest extends TestCase
      */
     public function testFetch () : void
     {
-        $registry = $this->buildRegistry(["a" => "1", "b" => "2"], true);
+        $registry = $this->buildRegistry(["test" => ["a" => "1", "b" => "2"]], true);
 
-        static::assertSame("1", $registry->get("a"));
-        static::assertSame("2", $registry->get("b"));
+        static::assertSame("1", $registry->get("test/a"));
+        static::assertSame("2", $registry->get("test/b"));
     }
 
 
     /**
      *
      */
-    public function testExceptionOnMissingInDebug () : void
+    public function testExceptionOnMissingIconInDebug () : void
     {
         $this->expectException(IconMissingException::class);
-        $this->expectExceptionMessage("Could not find icon: 'missing'.");
+        $this->expectExceptionMessage("Could not find icon 'missing' in namespace 'test'.");
 
-        $registry = $this->buildRegistry([], true);
-        $registry->get("missing");
+        $registry = $this->buildRegistry(["test" => []], true);
+        $registry->get("test/missing");
     }
 
 
     /**
      *
      */
-    public function testIgnoreOnMissingInProd () : void
+    public function testIgnoreExceptionOnMissingIconInProd () : void
     {
         $registry = $this->buildRegistry([], false);
-        static::assertSame("", $registry->get("missing"));
+        static::assertSame("", $registry->get("missing/icon"));
+    }
+
+
+
+    /**
+     *
+     */
+    public function testExceptionOnMissingNamespaceInDebug () : void
+    {
+        $this->expectException(NamespaceMissingException::class);
+        $this->expectExceptionMessage("Unknown icon namespace: 'missing'.");
+
+        $registry = $this->buildRegistry([], true);
+        $registry->get("missing/icon");
+    }
+
+
+    /**
+     *
+     */
+    public function testIgnoreExceptionOnMissingNamespaceInProd () : void
+    {
+        $registry = $this->buildRegistry([], false);
+        static::assertSame("", $registry->get("test/missing"));
     }
 
 
@@ -79,13 +110,13 @@ class IconRegistryTest extends TestCase
 
         $cache->expects(static::once())
             ->method("get")
-            ->willReturn(["a" => "a"]);
+            ->willReturn(["test" => ["a" => "a"]]);
 
         $loader = $this->getMockBuilder(IconLoader::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $registry = new IconRegistry($cache, $loader, false);
-        static::assertSame("a", $registry->get("a"));
+        static::assertSame("a", $registry->get("test/a"));
     }
 }
