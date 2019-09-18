@@ -24,7 +24,6 @@ class IconLoaderBundleExtension extends Extension
 
         // map config to services
         $config = $this->processConfiguration(new IconLoaderBundleConfiguration(), $configs);
-
         $registry = $container->getDefinition(IconRegistry::class);
 
         foreach ($config["namespaces"] as $namespace => $namespaceConfig)
