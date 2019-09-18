@@ -190,14 +190,12 @@ class IconRegistryTest extends TestCase
         $loader
             ->expects(self::once())
             ->method("load")
-            ->with("/project/dir/valid/a")
+            ->with("/project/dir/valid/a", "test")
             ->willReturn(["add" => "add"]);
 
         $registry = new IconRegistry(new ArrayAdapter(), $loader, "/project/dir/", true);
 
-        $registry->registerProjectNamespace("test", "/valid/a");
+        $registry->registerProjectNamespace("test", "/valid/a", "test");
         $registry->get("test/add");
     }
-
-
 }
