@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Definition;
 
 class RegisterIconNamespacesCompilerPassTest extends TestCase
 {
-    public function testPassingArguments ()
+    public function testPassingArguments () : void
     {
         $containerBuilder = $this->getMockBuilder(ContainerBuilder::class)
             ->disableOriginalConstructor()
@@ -22,7 +22,7 @@ class RegisterIconNamespacesCompilerPassTest extends TestCase
         $pass = new RegisterIconNamespacesCompilerPass([
             "test" => [
                 "path" => "test-path",
-                "class_name" => "test-class",
+                "class_pattern" => "test-class",
             ],
             "test2" => [
                 "path" => "test2-path",
@@ -31,12 +31,12 @@ class RegisterIconNamespacesCompilerPassTest extends TestCase
         ]);
 
         $containerBuilder
-            ->expects(self::once())
+            ->expects(static::once())
             ->method("getDefinition")
             ->willReturn($definition);
 
         $definition
-            ->expects(self::exactly(3))
+            ->expects(static::exactly(3))
             ->method("addMethodCall")
             ->withConsecutive(
                 ["registerProjectNamespace", ["test", "test-path", "test-class"]],

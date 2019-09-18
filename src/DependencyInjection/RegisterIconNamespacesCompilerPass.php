@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Compiler pass that installs a icon namespace for your bundle
+ * Compiler pass that installs a icon namespace for your bundle.
  */
 class RegisterIconNamespacesCompilerPass implements CompilerPassInterface
 {
@@ -28,7 +28,7 @@ class RegisterIconNamespacesCompilerPass implements CompilerPassInterface
     /**
      * @inheritDoc
      */
-    public function process (ContainerBuilder $container)
+    public function process (ContainerBuilder $container) : void
     {
         $registry = $container->getDefinition(IconRegistry::class);
 

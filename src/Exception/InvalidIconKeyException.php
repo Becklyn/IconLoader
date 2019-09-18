@@ -4,5 +4,4 @@ namespace Becklyn\IconLoader\Exception;
 
 class InvalidIconKeyException extends IconLoaderException
 {
-
 }

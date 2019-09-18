@@ -7,22 +7,28 @@ use PHPUnit\Framework\TestCase;
 
 class IconNamespaceTest extends TestCase
 {
-    public function testFull ()
+    /**
+     *
+     */
+    public function testFull () : void
     {
         $namespace = new IconNamespace("key", "dir", "class");
 
-        self::assertSame("key", $namespace->getKey());
-        self::assertSame("dir", $namespace->getDirectory());
-        self::assertSame("class", $namespace->getClassPattern());
+        static::assertSame("key", $namespace->getKey());
+        static::assertSame("dir", $namespace->getDirectory());
+        static::assertSame("class", $namespace->getClassPattern());
     }
 
 
-    public function testDefaultClass ()
+    /**
+     *
+     */
+    public function testDefaultClass () : void
     {
         $namespace = new IconNamespace("key", "dir");
 
-        self::assertSame("key", $namespace->getKey());
-        self::assertSame("dir", $namespace->getDirectory());
-        self::assertSame("icon icon-%s", $namespace->getClassPattern());
+        static::assertSame("key", $namespace->getKey());
+        static::assertSame("dir", $namespace->getDirectory());
+        static::assertSame("icon icon-%s", $namespace->getClassPattern());
     }
 }

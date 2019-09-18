@@ -22,7 +22,7 @@ class IconLoaderBundleConfigurationTest extends TestCase
                 ["namespaces" => [
                     "test" => [
                         "path" => "path-test",
-                        "class_name" => "class_name-test",
+                        "class_pattern" => "class_pattern-test",
                     ],
                     "test2" => [
                         "path" => "path-test2",
@@ -32,15 +32,15 @@ class IconLoaderBundleConfigurationTest extends TestCase
                 ["namespaces" => [
                     "test" => [
                         "path" => "path-test",
-                        "class_name" => "class_name-test",
+                        "class_pattern" => "class_pattern-test",
                     ],
                     "test2" => [
                         "path" => "path-test2",
-                        "class_name" => null,
+                        "class_pattern" => null,
                     ],
                     "test3" => [
                         "path" => "path-test2",
-                        "class_name" => null,
+                        "class_pattern" => null,
                     ],
                 ]],
             ],
@@ -58,9 +58,9 @@ class IconLoaderBundleConfigurationTest extends TestCase
     {
         $processor = new Processor();
         $processed = $processor->processConfiguration(new IconLoaderBundleConfiguration(), [
-            "becklyn_icon_loader" => $config
+            "becklyn_icon_loader" => $config,
         ]);
 
-        self::assertEquals($expected, $processed);
+        static::assertSame($expected, $processed);
     }
 }

@@ -26,7 +26,7 @@ class IconRegistry
 
 
     /**
-     * Mapping from namespaces name to loader glob
+     * Mapping from namespaces name to loader glob.
      *
      * @var array
      */
@@ -65,7 +65,7 @@ class IconRegistry
 
 
     /**
-     * Registers a namespace with a project-relative path
+     * Registers a namespace with a project-relative path.
      *
      * @param string $namespaceKey
      * @param string $relativePath
@@ -83,7 +83,7 @@ class IconRegistry
 
 
     /**
-     * Registers a namespace with a global path
+     * Registers a namespace with a global path.
      *
      * @param string $namespace
      * @param string $path
