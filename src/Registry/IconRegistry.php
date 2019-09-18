@@ -83,9 +83,7 @@ class IconRegistry
     /**
      * Registers a namespace with a global path.
      *
-     * @param string $namespace
-     * @param string $path
-     * @param string $className
+     * @param IconNamespace $namespace
      */
     public function registerNamespace (IconNamespace $namespace) : void
     {
