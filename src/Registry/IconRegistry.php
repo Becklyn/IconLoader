@@ -8,7 +8,6 @@ use Becklyn\IconLoader\Exception\IconMissingException;
 use Becklyn\IconLoader\Exception\InvalidIconKeyException;
 use Becklyn\IconLoader\Exception\NamespaceMissingException;
 use Becklyn\IconLoader\Loader\IconLoader;
-use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Contracts\Cache\CacheInterface;
 
 class IconRegistry
