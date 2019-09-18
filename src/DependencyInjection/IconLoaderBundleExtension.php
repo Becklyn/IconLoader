@@ -32,7 +32,7 @@ class IconLoaderBundleExtension extends Extension
             $registry->addMethodCall("registerProjectNamespace", [
                 $namespace,
                 $namespaceConfig["path"],
-                $namespaceConfig["class_name"],
+                $namespaceConfig["class_pattern"],
             ]);
         }
     }
