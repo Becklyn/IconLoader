@@ -20,8 +20,8 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "symfony/cache-contracts": "^1.1",
         "symfony/cache": "^4.2",
+        "symfony/cache-contracts": "^1.1",
         "symfony/config": "^4.2",
         "symfony/dependency-injection": "^4.2",
         "symfony/finder": "^4.2",
