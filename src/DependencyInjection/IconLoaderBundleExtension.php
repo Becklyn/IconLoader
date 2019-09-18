@@ -42,6 +42,6 @@ class IconLoaderBundleExtension extends Extension
      */
     public function getAlias ()
     {
-        return "becklyn_icon_loader";
+        return "icon_loader";
     }
 }
