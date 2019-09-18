@@ -34,6 +34,11 @@
     "config": {
         "sort-packages": true
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
     "autoload": {
         "psr-4": {
             "Becklyn\\IconLoader\\": "src/"
