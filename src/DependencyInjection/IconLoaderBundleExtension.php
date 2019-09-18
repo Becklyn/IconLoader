@@ -36,4 +36,13 @@ class IconLoaderBundleExtension extends Extension
             ]);
         }
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getAlias ()
+    {
+        return "becklyn_icon_loader";
+    }
 }
