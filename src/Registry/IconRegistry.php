@@ -32,15 +32,15 @@ class IconRegistry
 
 
     /**
-     * @var bool
-     */
-    private $isDebug;
-
-
-    /**
      * @var string
      */
     private $projectDir;
+
+
+    /**
+     * @var bool
+     */
+    private $isDebug;
 
 
     /**
@@ -52,12 +52,14 @@ class IconRegistry
     /**
      * @param CacheInterface $cache
      * @param IconLoader     $loader
+     * @param string         $projectDir
      * @param bool           $isDebug
      */
-    public function __construct (CacheInterface $cache, IconLoader $loader, bool $isDebug)
+    public function __construct (CacheInterface $cache, IconLoader $loader, string $projectDir, bool $isDebug)
     {
         $this->cache = $cache;
         $this->loader = $loader;
+        $this->projectDir = \rtrim($projectDir, "/");
         $this->isDebug = $isDebug;
     }
 
