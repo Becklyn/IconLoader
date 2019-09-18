@@ -86,8 +86,8 @@ class IconRegistryTest extends TestCase
      */
     public function testIgnoreExceptionOnMissingIconInProd () : void
     {
-        $registry = $this->buildRegistry([], false);
-        static::assertSame("", $registry->get("missing/icon"));
+        $registry = $this->buildRegistry(["test" => []], false);
+        static::assertSame("", $registry->get("test/missing"));
     }
 
 
@@ -111,7 +111,7 @@ class IconRegistryTest extends TestCase
     public function testIgnoreExceptionOnMissingNamespaceInProd () : void
     {
         $registry = $this->buildRegistry([], false);
-        static::assertSame("", $registry->get("test/missing"));
+        static::assertSame("", $registry->get("missing/icon"));
     }
 
 
