@@ -13,6 +13,19 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class IconRegistryTest extends TestCase
 {
+
+    private $fixtures;
+
+
+    /**
+     * @inheritDoc
+     */
+    protected function setUp () : void
+    {
+        $this->fixtures = \dirname(__DIR__) . "/_fixtures";
+    }
+
+
     /**
      * @param array $map
      *
@@ -118,5 +131,31 @@ class IconRegistryTest extends TestCase
 
         $registry = new IconRegistry($cache, $loader, false);
         static::assertSame("a", $registry->get("test/a"));
+    }
+
+
+    /**
+     * @return array
+     */
+    public function provideRegularUsage () : array
+    {
+        return [[true], [false]];
+    }
+
+
+    /**
+     * @dataProvider provideRegularUsage
+     *
+     * @param bool $debug
+     */
+    public function testRegularUsage (bool $debug) : void
+    {
+        $registry = new IconRegistry(new ArrayAdapter(), new IconLoader(), $debug);
+        $registry->registerNamespace(new IconNamespace("a", "{$this->fixtures}/valid/a"));
+        $registry->registerNamespace(new IconNamespace("b", "{$this->fixtures}/valid/b"));
+
+        self::assertSame(\trim(\file_get_contents("{$this->fixtures}/valid/a/add.svg")), $registry->get("a/add"));
+        self::assertSame(\trim(\file_get_contents("{$this->fixtures}/valid/b/add.svg")), $registry->get("b/add"));
+        self::assertSame(\trim(\file_get_contents("{$this->fixtures}/valid/a/sub/nested.svg")), $registry->get("a/nested"));
     }
 }

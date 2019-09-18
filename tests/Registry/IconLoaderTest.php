@@ -32,7 +32,7 @@ class IconLoaderTest extends TestCase
         $this->expectExceptionMessage("Conflict for icon 'conflict'.");
 
         $loader = new IconLoader();
-        $loader->load(__DIR__ . "/../_fixtures/different_files/*/icon");
+        $loader->load(__DIR__ . "/../_fixtures/different_files");
     }
 
 
@@ -42,6 +42,6 @@ class IconLoaderTest extends TestCase
     public function testMissingDir () : void
     {
         $loader = new IconLoader();
-        static::assertSame([], $loader->load(__DIR__ . "/../_fixtures/different_files/*/missing"));
+        static::assertSame([], $loader->load(__DIR__ . "/../_fixtures/missing"));
     }
 }
