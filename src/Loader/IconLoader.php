@@ -14,10 +14,11 @@ class IconLoader
      * Will overwrite existing keys, so if an icon is found multiple times,
      *
      * @param string $directory
+     * @param string $classPattern
      *
      * @return array
      */
-    public function load (string $directory) : array
+    public function load (string $directory, string $classPattern = "") : array
     {
         try
         {
@@ -40,11 +41,17 @@ class IconLoader
                 $key = $file->getBasename(".{$file->getExtension()}");
                 $content = \trim(\file_get_contents($file->getPathname()));
 
+                $attributes = ("" !== $classPattern)
+                    ? ' class="' . \sprintf($classPattern, $key) . '"'
+                    : "";
+
+                $finalIcon = "<span{$attributes}>{$content}</span>";
+
                 // icon with same key found
                 if (isset($mapping[$key]))
                 {
                     // different content -> throw exception
-                    if ($content !== $mapping[$key])
+                    if ($finalIcon !== $mapping[$key])
                     {
                         throw new IconConflictException($key);
                     }
@@ -53,7 +60,7 @@ class IconLoader
                     continue;
                 }
 
-                $mapping[$key] = \trim(\file_get_contents($file->getPathname()));
+                $mapping[$key] = $finalIcon;
             }
 
             return $mapping;
