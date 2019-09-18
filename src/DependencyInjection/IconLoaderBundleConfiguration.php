@@ -19,9 +19,24 @@ class IconLoaderBundleConfiguration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode("search_glob")
-                    ->defaultValue("build/mayd/*/icon")
-                    ->info("The glob to the directories, where the icons are stored. Will search for all *.svg icons there. Relative to the project dir.")
+                ->arrayNode("namespaces")
+                    ->normalizeKeys(false)
+                    ->arrayPrototype()
+                        ->beforeNormalization()
+                            ->ifString()
+                            ->then(function (string $value) { return ["path" => $value]; })
+                        ->end()
+                        ->children()
+                            ->scalarNode("path")
+                                ->isRequired()
+                            ->end()
+                            ->scalarNode("class_pattern")
+                                ->defaultNull()
+                                ->info("The class name pattern. The icon name will be passed and can be embedded using sprintf syntax '%s'.")
+                            ->end()
+                        ->end()
+                    ->end()
+                    ->info("The mapping of namespace to directory. Relative to the project dir.")
                 ->end()
             ->end();
 

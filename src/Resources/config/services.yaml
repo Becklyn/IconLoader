@@ -8,3 +8,4 @@ services:
 
     Becklyn\IconLoader\Registry\IconRegistry:
         $isDebug: '%kernel.debug%'
+        $projectDir: '%kernel.project_dir%'
