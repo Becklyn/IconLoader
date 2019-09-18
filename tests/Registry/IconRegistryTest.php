@@ -5,6 +5,7 @@ namespace Tests\Becklyn\IconLoader\Registry;
 use Becklyn\IconLoader\Data\IconNamespace;
 use Becklyn\IconLoader\Exception\DuplicateNamespaceException;
 use Becklyn\IconLoader\Exception\IconMissingException;
+use Becklyn\IconLoader\Exception\InvalidIconKeyException;
 use Becklyn\IconLoader\Exception\NamespaceMissingException;
 use Becklyn\IconLoader\Loader\IconLoader;
 use Becklyn\IconLoader\Registry\IconRegistry;
@@ -85,8 +86,8 @@ class IconRegistryTest extends TestCase
      */
     public function testIgnoreExceptionOnMissingIconInProd () : void
     {
-        $registry = $this->buildRegistry([], false);
-        static::assertSame("", $registry->get("missing/icon"));
+        $registry = $this->buildRegistry(["test" => []], false);
+        static::assertSame("", $registry->get("test/missing"));
     }
 
 
@@ -110,7 +111,7 @@ class IconRegistryTest extends TestCase
     public function testIgnoreExceptionOnMissingNamespaceInProd () : void
     {
         $registry = $this->buildRegistry([], false);
-        static::assertSame("", $registry->get("test/missing"));
+        static::assertSame("", $registry->get("missing/icon"));
     }
 
 
@@ -197,5 +198,31 @@ class IconRegistryTest extends TestCase
 
         $registry->registerProjectNamespace("test", "/valid/a", "test");
         $registry->get("test/add");
+    }
+
+
+    /**
+     * @return array
+     */
+    public function provideInvalidKeys () : array
+    {
+        return [
+            ["single"],
+            ["triple/triple/triple"]
+        ];
+    }
+
+
+    /**
+     * @dataProvider provideInvalidKeys
+     *
+     * @param string $key
+     */
+    public function testInvalidKeys (string $key) : void
+    {
+        $this->expectException(InvalidIconKeyException::class);
+
+        $registry = new IconRegistry(new ArrayAdapter(), new IconLoader(), "/project/dir/", true);
+        $registry->get($key);
     }
 }

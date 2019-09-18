@@ -149,7 +149,7 @@ class IconRegistry
      */
     public function get (string $key) : string
     {
-        $parts = \explode("/", $key, 2);
+        $parts = \explode("/", $key);
 
         if (2 !== \count($parts))
         {
