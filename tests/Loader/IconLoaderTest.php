@@ -16,10 +16,10 @@ class IconLoaderTest extends TestCase
         $loader = new IconLoader();
         $map = $loader->load(__DIR__ . "/../_fixtures/valid");
 
-        static::assertCount(3, $map);
-        static::assertSame("<span>add</span>", $map["add"]);
-        static::assertSame("<span>remove</span>", $map["remove"]);
-        static::assertSame("<span>nested</span>", $map["nested"]);
+        self::assertCount(3, $map);
+        self::assertSame("<span>add</span>", $map["add"]);
+        self::assertSame("<span>remove</span>", $map["remove"]);
+        self::assertSame("<span>nested</span>", $map["nested"]);
     }
 
 
@@ -42,7 +42,7 @@ class IconLoaderTest extends TestCase
     public function testMissingDir () : void
     {
         $loader = new IconLoader();
-        static::assertSame([], $loader->load(__DIR__ . "/../_fixtures/missing"));
+        self::assertSame([], $loader->load(__DIR__ . "/../_fixtures/missing"));
     }
 
 
@@ -52,7 +52,7 @@ class IconLoaderTest extends TestCase
     public function testEmptyDir () : void
     {
         $loader = new IconLoader();
-        static::assertSame([], $loader->load(__DIR__ . "/../_fixtures/empty"));
+        self::assertSame([], $loader->load(__DIR__ . "/../_fixtures/empty"));
     }
 
 
