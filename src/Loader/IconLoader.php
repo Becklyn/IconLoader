@@ -9,33 +9,20 @@ use Symfony\Component\Finder\SplFileInfo;
 class IconLoader
 {
     /**
-     * @var string
-     */
-    private $directoriesGlob;
-
-
-    /**
-     * @param string $directoriesGlob
-     */
-    public function __construct (string $directoriesGlob)
-    {
-        $this->directoriesGlob = $directoriesGlob;
-    }
-
-
-    /**
      * Loads a map of all icon keys to their content.
      *
      * Will overwrite existing keys, so if an icon is found multiple times,
      *
+     * @param string $directory
+     *
      * @return array
      */
-    public function load () : array
+    public function load (string $directory) : array
     {
         try
         {
             $finder = Finder::create()
-                ->in($this->directoriesGlob)
+                ->in($directory)
                 ->files()
                 ->name("*.svg")
                 ->ignoreDotFiles(true);
