@@ -47,6 +47,16 @@ class IconLoaderTest extends TestCase
 
 
     /**
+     *
+     */
+    public function testEmptyDir () : void
+    {
+        $loader = new IconLoader();
+        static::assertSame([], $loader->load(__DIR__ . "/../_fixtures/empty"));
+    }
+
+
+    /**
      * Tests the proper wrapping
      */
     public function testWrapping () : void
