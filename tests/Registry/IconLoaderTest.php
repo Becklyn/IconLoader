@@ -14,7 +14,7 @@ class IconLoaderTest extends TestCase
     public function testValid () : void
     {
         $loader = new IconLoader();
-        $map = $loader->load(__DIR__ . "/../_fixtures/valid/*/icon");
+        $map = $loader->load(__DIR__ . "/../_fixtures/valid");
 
         static::assertCount(3, $map);
         static::assertSame("add", $map["add"]);
