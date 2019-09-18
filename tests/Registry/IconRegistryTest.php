@@ -3,6 +3,7 @@
 namespace Tests\Becklyn\IconLoader\Registry;
 
 use Becklyn\IconLoader\Data\IconNamespace;
+use Becklyn\IconLoader\Exception\DuplicateNamespaceException;
 use Becklyn\IconLoader\Exception\IconMissingException;
 use Becklyn\IconLoader\Exception\NamespaceMissingException;
 use Becklyn\IconLoader\Loader\IconLoader;
@@ -42,7 +43,7 @@ class IconRegistryTest extends TestCase
         $loader->method("load")
             ->willReturnCallback(function ($key) use ($map) { return $map[$key] ?? []; });
 
-        $registry = new IconRegistry($cache, $loader, $isDebug);
+        $registry = new IconRegistry($cache, $loader, "/project/dir/", $isDebug);
 
         // register namespaces
         foreach ($map as $namespace => $config)
@@ -129,7 +130,7 @@ class IconRegistryTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $registry = new IconRegistry($cache, $loader, false);
+        $registry = new IconRegistry($cache, $loader, "/project/dir/", false);
         static::assertSame("a", $registry->get("test/a"));
     }
 
@@ -137,20 +138,20 @@ class IconRegistryTest extends TestCase
     /**
      * @return array
      */
-    public function provideRegularUsage () : array
+    public function provideDebugAndProd () : array
     {
         return [[true], [false]];
     }
 
 
     /**
-     * @dataProvider provideRegularUsage
+     * @dataProvider provideDebugAndProd
      *
      * @param bool $debug
      */
     public function testRegularUsage (bool $debug) : void
     {
-        $registry = new IconRegistry(new ArrayAdapter(), new IconLoader(), $debug);
+        $registry = new IconRegistry(new ArrayAdapter(), new IconLoader(), "/project/dir/", $debug);
         $registry->registerNamespace(new IconNamespace("a", "{$this->fixtures}/valid/a"));
         $registry->registerNamespace(new IconNamespace("b", "{$this->fixtures}/valid/b"));
 
@@ -158,4 +159,45 @@ class IconRegistryTest extends TestCase
         self::assertSame(\trim(\file_get_contents("{$this->fixtures}/valid/b/add.svg")), $registry->get("b/add"));
         self::assertSame(\trim(\file_get_contents("{$this->fixtures}/valid/a/sub/nested.svg")), $registry->get("a/nested"));
     }
+
+
+    /**
+     * @dataProvider provideDebugAndProd
+     *
+     * @param bool $debug
+     */
+    public function testDuplicateNamespace (bool $debug) : void
+    {
+        $this->expectException(DuplicateNamespaceException::class);
+        $registry = new IconRegistry(new ArrayAdapter(), new IconLoader(), "/project/dir/", $debug);
+
+        $registry->registerNamespace(new IconNamespace("test", "test"));
+        $registry->registerNamespace(new IconNamespace("test", "test"));
+    }
+
+
+    /**
+     * @dataProvider provideDebugAndProd
+     *
+     * @param bool $debug
+     */
+    public function testProjectNamespacePrefix () : void
+    {
+        $loader = $this->getMockBuilder(IconLoader::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $loader
+            ->expects(self::once())
+            ->method("load")
+            ->with("/project/dir/valid/a")
+            ->willReturn(["add" => "add"]);
+
+        $registry = new IconRegistry(new ArrayAdapter(), $loader, "/project/dir/", true);
+
+        $registry->registerProjectNamespace("test", "/valid/a");
+        $registry->get("test/add");
+    }
+
+
 }

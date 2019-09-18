@@ -2,6 +2,8 @@
 
 namespace Becklyn\IconLoader\Data;
 
+use Becklyn\IconLoader\Exception\InvalidNamespaceKeyException;
+
 class IconNamespace
 {
     /**
@@ -29,6 +31,14 @@ class IconNamespace
      */
     public function __construct (string $key, string $directory, ?string $classPattern = null)
     {
+        if (false !== \strpos($key, "/"))
+        {
+            throw new InvalidNamespaceKeyException(\sprintf(
+                "Invalid namespace key: '%s'",
+                $key
+            ));
+        }
+
         $this->key = $key;
         $this->directory = $directory;
         $this->classPattern = $classPattern ?? "icon icon-%s";

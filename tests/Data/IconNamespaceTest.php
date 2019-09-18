@@ -3,6 +3,7 @@
 namespace Tests\Becklyn\IconLoader\Data;
 
 use Becklyn\IconLoader\Data\IconNamespace;
+use Becklyn\IconLoader\Exception\InvalidNamespaceKeyException;
 use PHPUnit\Framework\TestCase;
 
 class IconNamespaceTest extends TestCase
@@ -30,5 +31,15 @@ class IconNamespaceTest extends TestCase
         static::assertSame("key", $namespace->getKey());
         static::assertSame("dir", $namespace->getDirectory());
         static::assertSame("icon icon-%s", $namespace->getClassPattern());
+    }
+
+
+    /**
+     *
+     */
+    public function testInvalidNamespaceKey () : void
+    {
+        $this->expectException(InvalidNamespaceKeyException::class);
+        new IconNamespace("invalid/invalid", "test");
     }
 }
