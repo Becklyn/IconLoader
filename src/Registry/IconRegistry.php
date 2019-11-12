@@ -186,4 +186,31 @@ class IconRegistry
 
         return $icon;
     }
+
+
+    /**
+     * Returns all registered namespace keys.
+     *
+     * @return string[]
+     */
+    public function getAllNamespaceKeys () : array
+    {
+        $keys = \array_keys($this->namespaces);
+        \natcasesort($keys);
+        return $keys;
+    }
+
+
+    /**
+     * Returns the list of all registered icons in the given namespace.
+     *
+     * @return string[]
+     */
+    public function getIconsInNamespace (string $namespaceKey) : array
+    {
+        $registry = $this->fetchRegistry();
+        $icons = \array_keys($registry[$namespaceKey] ?? []);
+        \natcasesort($icons);
+        return $icons;
+    }
 }

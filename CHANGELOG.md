@@ -1,3 +1,9 @@
+2.1.0
+=====
+
+*   Added command `becklyn:icons:list` to list all registered namespaces + icons.
+
+
 2.0.0
 =====
 
