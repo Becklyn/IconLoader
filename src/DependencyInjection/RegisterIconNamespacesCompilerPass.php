@@ -18,7 +18,6 @@ class RegisterIconNamespacesCompilerPass implements CompilerPassInterface
 
 
     /**
-     * @param array $globalNamespaces
      */
     public function __construct (array $globalNamespaces)
     {

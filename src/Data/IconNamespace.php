@@ -25,8 +25,6 @@ class IconNamespace
 
 
     /**
-     * @param string $key
-     * @param string $directory
      * @param string $classPattern
      */
     public function __construct (string $key, string $directory, ?string $classPattern = null)
@@ -46,7 +44,6 @@ class IconNamespace
 
 
     /**
-     * @return string
      */
     public function getKey () : string
     {
@@ -55,7 +52,6 @@ class IconNamespace
 
 
     /**
-     * @return string
      */
     public function getDirectory () : string
     {
@@ -64,7 +60,6 @@ class IconNamespace
 
 
     /**
-     * @return string
      */
     public function getClassPattern () : string
     {

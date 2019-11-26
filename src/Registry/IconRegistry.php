@@ -50,10 +50,6 @@ class IconRegistry
 
 
     /**
-     * @param CacheInterface $cache
-     * @param IconLoader     $loader
-     * @param string         $projectDir
-     * @param bool           $isDebug
      */
     public function __construct (CacheInterface $cache, IconLoader $loader, string $projectDir, bool $isDebug)
     {
@@ -66,9 +62,6 @@ class IconRegistry
 
     /**
      * Registers a namespace with a project-relative path.
-     *
-     * @param string $namespaceKey
-     * @param string $relativePath
      */
     public function registerProjectNamespace (string $namespaceKey, string $relativePath, ?string $className = null) : void
     {
@@ -84,8 +77,6 @@ class IconRegistry
 
     /**
      * Registers a namespace with a global path.
-     *
-     * @param IconNamespace $namespace
      */
     public function registerNamespace (IconNamespace $namespace) : void
     {
@@ -124,7 +115,6 @@ class IconRegistry
 
 
     /**
-     * @return array
      */
     private function loadAll () : array
     {
@@ -144,8 +134,6 @@ class IconRegistry
 
     /**
      * Returns the icons' SVG content.
-     *
-     * @param string $key
      */
     public function get (string $key) : string
     {

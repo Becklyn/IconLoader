@@ -15,7 +15,6 @@ class IconLoaderTwigExtension extends AbstractExtension
 
 
     /**
-     * @param IconRegistry $iconRegistry
      */
     public function __construct (IconRegistry $iconRegistry)
     {
