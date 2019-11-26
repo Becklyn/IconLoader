@@ -156,9 +156,9 @@ class IconRegistryTest extends TestCase
         $registry->registerNamespace(new IconNamespace("a", "{$this->fixtures}/valid/a"));
         $registry->registerNamespace(new IconNamespace("b", "{$this->fixtures}/valid/b"));
 
-        self::assertContains(\trim(\file_get_contents("{$this->fixtures}/valid/a/add.svg")), $registry->get("a/add"));
-        self::assertContains(\trim(\file_get_contents("{$this->fixtures}/valid/b/add.svg")), $registry->get("b/add"));
-        self::assertContains(\trim(\file_get_contents("{$this->fixtures}/valid/a/sub/nested.svg")), $registry->get("a/nested"));
+        self::assertStringContainsString(\trim(\file_get_contents("{$this->fixtures}/valid/a/add.svg")), $registry->get("a/add"));
+        self::assertStringContainsString(\trim(\file_get_contents("{$this->fixtures}/valid/b/add.svg")), $registry->get("b/add"));
+        self::assertStringContainsString(\trim(\file_get_contents("{$this->fixtures}/valid/a/sub/nested.svg")), $registry->get("a/nested"));
     }
 
 

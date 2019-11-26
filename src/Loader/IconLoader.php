@@ -12,11 +12,6 @@ class IconLoader
      * Loads a map of all icon keys to their content.
      *
      * Will overwrite existing keys, so if an icon is found multiple times,
-     *
-     * @param string $directory
-     * @param string $classPattern
-     *
-     * @return array
      */
     public function load (string $directory, string $classPattern = "") : array
     {
