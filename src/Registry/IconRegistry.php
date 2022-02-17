@@ -12,7 +12,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class IconRegistry
 {
-    const CACHE_KEY = "becklyn.icon_loader.registry";
+    public const CACHE_KEY = "becklyn.icon_loader.registry";
 
     /**
      * @var CacheInterface

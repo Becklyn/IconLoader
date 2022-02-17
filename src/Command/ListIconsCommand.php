@@ -12,11 +12,7 @@ class ListIconsCommand extends Command
 {
     protected static $defaultName = "becklyn:icons:list";
 
-
-    /**
-     * @var IconRegistry
-     */
-    private $iconRegistry;
+    private IconRegistry $iconRegistry;
 
 
     /**
@@ -57,7 +53,7 @@ class ListIconsCommand extends Command
     /**
      * Lists all icons for the given namespace key.
      */
-    private function listIconsForNamespace (SymfonyStyle $io, string $namespaceKey) : ?int
+    private function listIconsForNamespace (SymfonyStyle $io, string $namespaceKey) : int
     {
         $io->comment("Listing icons in namespace <fg=blue>{$namespaceKey}</>");
 

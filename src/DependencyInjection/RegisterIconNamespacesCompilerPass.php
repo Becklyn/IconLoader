@@ -11,18 +11,14 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class RegisterIconNamespacesCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @var array
-     */
-    private $globalNamespaces;
+    private array $globalNamespaces;
 
 
-    /**
-     */
     public function __construct (array $globalNamespaces)
     {
         $this->globalNamespaces = $globalNamespaces;
     }
+
 
     /**
      * @inheritDoc

@@ -11,7 +11,7 @@ class IconLoaderBundleConfiguration implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function getConfigTreeBuilder ()
+    public function getConfigTreeBuilder () : TreeBuilder
     {
         $treeBuilder = new TreeBuilder("becklyn_icon_loader");
         /** @var ArrayNodeDefinition $rootNode */
